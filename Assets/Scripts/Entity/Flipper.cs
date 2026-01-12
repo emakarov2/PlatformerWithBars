@@ -1,19 +1,23 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Flipper : MonoBehaviour
 {
-    private Quaternion _defaultRotation = Quaternion.identity;
-    private Quaternion _rotatedByY = Quaternion.Euler(0f, 180f, 0f);
+    [SerializeField] private SpriteRenderer _spriteRenderer;
 
+    private float _defaultDirectionMultiplier = 1f;
+    private float _flippedDirectionMultiplier = -1f;
+    
     private bool _isFlipped = false;
+
+    public bool IsFacingRight => _isFlipped == false;
+    public float Direction => IsFacingRight ? _defaultDirectionMultiplier : _flippedDirectionMultiplier;
 
     public void SetRotation(bool isOrientDefault)
     {
-        if(_isFlipped != isOrientDefault) 
+        if (_isFlipped != isOrientDefault)
             return;
-        
-        transform.rotation = isOrientDefault ? _defaultRotation : _rotatedByY;
+
+        _spriteRenderer.flipX = !isOrientDefault;
         _isFlipped = isOrientDefault == false;
     }
 }

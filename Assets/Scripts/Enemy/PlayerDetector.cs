@@ -7,6 +7,7 @@ public class PlayerDetector : MonoBehaviour
     [SerializeField] private float _sightAngle = 120f;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] private Flipper _flipper;
 
     private float _attackDistance = 2f;
 
@@ -53,7 +54,7 @@ public class PlayerDetector : MonoBehaviour
         direction = target.position - transform.position;
 
         float sightAngleHalf = _sightAngle / 2;
-        float angleToPlayer = Vector2.Angle(transform.right, direction);
+        float angleToPlayer = Vector2.Angle(transform.right, direction * _flipper.Direction);
 
         return angleToPlayer < sightAngleHalf;
     }

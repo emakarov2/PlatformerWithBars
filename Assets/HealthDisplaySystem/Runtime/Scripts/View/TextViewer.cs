@@ -14,7 +14,7 @@ public class TextViewer : HealthViewer
     {
         if (_text != null)
         {
-            _text.text = $"{Health.CurrentHealth}/{Health.Max}";
+            _text.text = $"{Health.Current}/{Health.Max}";
         }
     }
 }

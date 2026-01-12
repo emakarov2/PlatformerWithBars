@@ -6,7 +6,7 @@ public class UsualBar : BaseBar
     {
         if (Slider != null && Health != null )
         {
-            Slider.value = Health.CurrentHealth;
+            Slider.value = Health.Current;
         }
     }
 
@@ -14,7 +14,7 @@ public class UsualBar : BaseBar
     {
         if (Slider != null && Health != null)
         {
-            Slider.value = Health.CurrentHealth;
+            Slider.value = Health.Current;
         }
     }
 }

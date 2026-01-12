@@ -3,15 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public abstract class Entity : MonoBehaviour
 {
-   protected Health _health;
+   protected Health Health;
 
     protected virtual void Awake()
     {
-        _health = GetComponent<Health>();
+        Health = GetComponent<Health>();
     }
 
     public virtual void AcceptAttack(float damage)
     {
-        _health.Decrease(damage);
+        Health.Decrease(damage);
     }
 }

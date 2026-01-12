@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(InputReader))]
 [RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(Collector))]
-[RequireComponent(typeof(Attack))]
+[RequireComponent(typeof(Attacker))]
 public class Player : Entity
 {
     private Flipper _flipper;
@@ -13,7 +13,7 @@ public class Player : Entity
     private PlayerMover _mover;
     private GroundDetector _groundDetector;
     private Collector _collector;
-    private Attack _attack;
+    private Attacker _attack;
 
     protected override void Awake()
     {
@@ -23,7 +23,7 @@ public class Player : Entity
         _mover = GetComponent<PlayerMover>();
         _groundDetector = GetComponent<GroundDetector>();
         _collector = GetComponent<Collector>();
-        _attack = GetComponent<Attack>();
+        _attack = GetComponent<Attacker>();
     }
 
     private void Update()
@@ -33,7 +33,7 @@ public class Player : Entity
 
     private void FixedUpdate()
     {
-        if (_health.IsAlive)
+        if (Health.IsAlive)
         {
             if (_inputReader.Direction != 0)
             {
@@ -59,6 +59,6 @@ public class Player : Entity
 
     public override void AcceptAttack(float damage)
     {
-        _health.Decrease(damage);
+        Health.Decrease(damage);
     }
 }

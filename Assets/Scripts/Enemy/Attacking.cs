@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Attack))]
+[RequireComponent(typeof(Attacker))]
 public class Attacking : MonoBehaviour
 {
     [SerializeField] private float _delay = 1f;
 
-    private Attack _attack;
+    private Attacker _attack;
 
     private Coroutine _coroutine;
 
@@ -14,7 +14,7 @@ public class Attacking : MonoBehaviour
 
     private void Awake()
     {
-        _attack = GetComponent<Attack>();
+        _attack = GetComponent<Attacker>();
     }
 
     private void Start()

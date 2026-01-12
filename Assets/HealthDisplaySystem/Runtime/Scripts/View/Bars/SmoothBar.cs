@@ -13,17 +13,16 @@ public class SmoothBar : BaseBar
     {
         if (Health != null && Slider != null)
         {
-            _targetHealth = Health.CurrentHealth;
+            _targetHealth = Health.Current;
             Slider.value = _targetHealth;
         }
     }
-
 
     protected override void OnHealthChanged()
     {
         if (Health != null)
         {
-            _targetHealth = Health.CurrentHealth;
+            _targetHealth = Health.Current;
 
             if (_barUpdateCoroutine != null)
             {

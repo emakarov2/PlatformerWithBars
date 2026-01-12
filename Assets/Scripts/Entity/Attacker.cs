@@ -1,9 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Attack : MonoBehaviour
+public class Attacker : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
+    [SerializeField] private Flipper _flipper;
 
     private SpriteRenderer _spriteRenderer;
 
@@ -18,11 +19,9 @@ public class Attack : MonoBehaviour
     public void Strike()
     {
         Entity target = TryGetTarget();
-        Debug.Log("поиск цели");
 
         if (target != null)
         {
-        Debug.Log("цель найдена");
             target.AcceptAttack(_damage);
         }
     }
@@ -31,7 +30,7 @@ public class Attack : MonoBehaviour
     {
         float playerHalfWidht = _spriteRenderer.bounds.size.y / 2;
 
-        Vector2 rayStart = transform.position + transform.right * playerHalfWidht;
+        Vector2 rayStart = transform.position + transform.right * playerHalfWidht * _flipper.Direction;
 
         RaycastHit2D hit = Physics2D.Raycast(
         rayStart,

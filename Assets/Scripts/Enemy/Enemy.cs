@@ -28,7 +28,7 @@ public class Enemy : Entity
 
     private void Update()
     {
-        if (_health.IsAlive)
+        if (Health.IsAlive)
         {
             if (_playerDetector.CanAttack)
             {
@@ -55,6 +55,6 @@ public class Enemy : Entity
 
    public override void AcceptAttack(float damage)
     {
-        _health.Decrease(damage);        
+        Health.Decrease(damage);        
     }
 }

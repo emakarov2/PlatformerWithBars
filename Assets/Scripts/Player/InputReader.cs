@@ -7,10 +7,12 @@ public class InputReader : MonoBehaviour
     private bool _isJump;
     private bool _isInteracting;
     private bool _isAttacking;
+    private bool _isVampiring;
     private bool _isDirectionDefault = true;
 
     public bool IsDirectionDefault => _isDirectionDefault;
     public bool IsAttacking => _isAttacking;
+    public bool IsVampiring => _isVampiring;
     public float Direction { get; private set; }
 
     private void Update()
@@ -36,9 +38,16 @@ public class InputReader : MonoBehaviour
         {
             _isAttacking = true;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            _isVampiring = true;
+        }
     }
 
     public bool GetIsAttacking() => GetBoolAsTrigger(ref _isAttacking);
+    
+    public bool GetIsVampiring() => GetBoolAsTrigger(ref _isVampiring);
 
     public bool GetIsInteracting() => GetBoolAsTrigger(ref _isInteracting);
 

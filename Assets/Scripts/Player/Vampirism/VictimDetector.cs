@@ -8,9 +8,12 @@ public class VictimDetector : MonoBehaviour
     private int _maxNumberEnemyesInRange = 10;
     private Collider2D[] _enemyesInRadius;
 
+    private float _radiusSqr;
+
     private void Awake()
     {
         _enemyesInRadius = new Collider2D[_maxNumberEnemyesInRange];
+        _radiusSqr = _radius * _radius;
     }
 
     public float Radius => _radius;
@@ -27,7 +30,7 @@ public class VictimDetector : MonoBehaviour
         }
 
     Entity nearestEnemy = null;
-    float minDistance = _radius;
+    float minDistanceSqr = _radiusSqr;
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -39,12 +42,15 @@ public class VictimDetector : MonoBehaviour
 
             if(enemyCollider.TryGetComponent(out Entity enemy) && enemy.TryGetComponent(out Health health) && health.IsAlive)
             {
-                float distance = Vector2.Distance(player, enemyCollider.transform.position);
+               // float distance = Vector2.Distance(player, enemyCollider.transform.position);
+               Vector2 toEnemy = (Vector2)enemyCollider.transform.position - player;
+                float distanceSqr = toEnemy.sqrMagnitude;
 
-                if (distance < minDistance)
+
+                if (distanceSqr < minDistanceSqr)
                 {
                     nearestEnemy = enemy;
-                    minDistance = distance;
+                    minDistanceSqr = distanceSqr;
                 }
             }
         }

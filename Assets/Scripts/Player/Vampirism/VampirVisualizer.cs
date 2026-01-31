@@ -4,9 +4,15 @@ public class VampirVisualizer : MonoBehaviour
 {
     [SerializeField] private VictimDetector _detector;
     [SerializeField] private SpriteRenderer _area;
+    [SerializeField] private VampirismAbility _vampirism;
 
     private float _multipleRadiusToDiameter = 2f;
     private float _ThirtyPercent = 0.1f;
+
+    private void OnEnable()
+    {
+        _vampirism.AbilitySwitched += SwitchAreaShow;
+    }
 
     private void Start()
     {
@@ -21,19 +27,16 @@ public class VampirVisualizer : MonoBehaviour
         }
     }
 
-    public void StartAbility()
+    private void OnDisable()
     {
-        if (_area != null)
-        {
-            _area.enabled = true;
-        }
+        _vampirism.AbilitySwitched -= SwitchAreaShow;
     }
 
-    public void StopAbility()
+    private void SwitchAreaShow()
     {
         if (_area != null)
         {
-            _area.enabled = false;
+            _area.enabled = _area.enabled == false;
         }
     }
 

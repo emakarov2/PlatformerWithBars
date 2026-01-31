@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(GroundDetector))]
 [RequireComponent(typeof(Collector))]
 [RequireComponent(typeof(Attacker))]
-[RequireComponent(typeof(Vampir))]
+[RequireComponent(typeof(VampirismAbility))]
 
 public class Player : Entity
 {
@@ -16,7 +16,7 @@ public class Player : Entity
     private GroundDetector _groundDetector;
     private Collector _collector;
     private Attacker _attack;
-    private Vampir _vampir;
+    private VampirismAbility _vampir;
 
     protected override void Awake()
     {
@@ -27,7 +27,7 @@ public class Player : Entity
         _groundDetector = GetComponent<GroundDetector>();
         _collector = GetComponent<Collector>();
         _attack = GetComponent<Attacker>();
-        _vampir = GetComponent<Vampir>();
+        _vampir = GetComponent<VampirismAbility>();
     }
 
     private void Update()
@@ -61,7 +61,7 @@ public class Player : Entity
 
             if (_inputReader.GetIsVampiring())
             {
-                _vampir.TryActivate();
+                _vampir.ActivateIfAvailable();
             }
         }
     }

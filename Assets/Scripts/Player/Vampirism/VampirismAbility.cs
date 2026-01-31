@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class Vampir : MonoBehaviour
+public class VampirismAbility : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float _duration = 6f;
@@ -11,7 +12,6 @@ public class Vampir : MonoBehaviour
     [Header("Dependences")]
     [SerializeField] private VictimDetector _detector;
     [SerializeField] private Player _player;
-    [SerializeField] private VampirVisualizer _visualizer;
     [SerializeField] private VampirUI _userInterface;
 
     private bool _isActive = false;
@@ -21,6 +21,8 @@ public class Vampir : MonoBehaviour
 
     private Entity _currentVictim;
 
+    public event Action AbilitySwitched;
+
     private void Start()
     {
         if (_userInterface != null)
@@ -29,7 +31,7 @@ public class Vampir : MonoBehaviour
         }
     }
 
-    public void TryActivate()
+    public void ActivateIfAvailable()
     {
         if (_isActive == false && _isCooldowning == false)
         {
@@ -42,10 +44,7 @@ public class Vampir : MonoBehaviour
         _isActive = true;
         _currentVictim = null;
 
-        if (_visualizer != null)
-        {
-            _visualizer.StartAbility();
-        }
+        AbilitySwitched?.Invoke();
 
         if (_userInterface != null)
         {
@@ -53,7 +52,7 @@ public class Vampir : MonoBehaviour
             _userInterface.OnAbilityStarted(_duration);
         }
 
-        _activityCoroutine = StartCoroutine(AbilityCoroutine());
+        _activityCoroutine = StartCoroutine(VampiringCoroutine());
     }
 
     private void Deactivate()
@@ -61,10 +60,7 @@ public class Vampir : MonoBehaviour
         _isActive = false;
         _currentVictim = null;
 
-        if (_visualizer != null)
-        {
-            _visualizer.StopAbility();
-        }
+        AbilitySwitched?.Invoke();
 
         if (_activityCoroutine != null)
         {
@@ -72,10 +68,10 @@ public class Vampir : MonoBehaviour
             _activityCoroutine = null;
         }
 
-        StartCoroutine(CooldownCoroutine());
+        StartCoroutine(CooldowningVampirismCoroutine());
     }
 
-    private IEnumerator AbilityCoroutine()
+    private IEnumerator VampiringCoroutine()
     {
         float timer = _duration;
 
@@ -108,7 +104,7 @@ public class Vampir : MonoBehaviour
         Deactivate();
     }
 
-    private IEnumerator CooldownCoroutine()
+    private IEnumerator CooldowningVampirismCoroutine()
     {
         _isCooldowning = true;
         float timer = _cooldown;
